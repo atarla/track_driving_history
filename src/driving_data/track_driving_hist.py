@@ -3,8 +3,8 @@
 """
 
 Input File: input.txt
- run `python setup.py install` to install the command `fibonacci`
-inside your current environment.
+ run `python setup.py install` to use the command `driving_data <input filename>`
+
 
 """
 from __future__ import division, print_function, absolute_import
@@ -25,15 +25,15 @@ _logger = logging.getLogger(__name__)
 
 OUT_FILE = "output.txt"
 MIN_AVG_SPEED = 5
-MAX_AVG_SPEED = 10
+MAX_AVG_SPEED = 100
 FMT = '%H:%M'
 
 
 def process_input(n):
-    """Register a new driver
+    """get input
 
     Args:
-      d_name (string): string
+      n (string): string
 
     Returns:
       nothing
@@ -41,6 +41,7 @@ def process_input(n):
     with open(n) as f:
         drivers = []
         trips = {}
+        # make a list of all drivers
         for line in f:
             if line.startswith('D'):
                 d_name = line.split()[1]
@@ -49,6 +50,32 @@ def process_input(n):
                 d_name_dict = line.split()[1]
                 key, value = d_name_dict, []
                 trips.setdefault(key, []).append(line.rstrip())
+    total_miles, mph = calculate_miles(drivers, trips)
+    final_report = {}
+    for name in drivers:
+
+        final_report.setdefault(name, []).append(total_miles.get(name, 0))
+        if total_miles.get(name) is not None:
+            speed = round(total_miles.get(name) / mph.get(name))
+            if MIN_AVG_SPEED < speed < MAX_AVG_SPEED:
+                final_report.setdefault(name, []).append(speed)
+    # sort report according to decreasing miles
+    sorted_x = sorted(final_report.items(), key=lambda e: e[1][0], reverse=True)
+    create_report(sorted_x)
+
+    return 'no'
+
+
+def calculate_miles(drivers, trips):
+    """calculate total miles and average speed
+
+        Args:
+          drivers (list): list of strings
+          trips (dict): trips taken by each driver
+
+        Returns:
+          total miles travelled and average speed
+        """
     total_miles = {}
     mph = {}
     miles = 0.0
@@ -56,32 +83,26 @@ def process_input(n):
     for k, dk in trips.items():
         if k in drivers:
             individual_trips = [listitem for listitem in dk]
+            # calculate total trip time
             miles = [float(token.split()[4]) for token in individual_trips]
-            # trip_time = [token.split()[3]-token.split()[2] for token in individual_trips]
+            # calculate average speed
             tdelta = [(datetime.strptime(str(token.split()[3]), FMT) - datetime.strptime(str(token.split()[2]),
                                                                                          FMT)).seconds / 3600.0 for
                       token in individual_trips]
-
             total_miles.setdefault(k, round(sum(miles)))
             mph.setdefault(k, sum(tdelta))
-            print(total_miles)
-            print(mph)
+    return total_miles, mph
 
-    final_report = {}
-    for name in drivers:
-
-        final_report.setdefault(name, []).append(total_miles.get(name, 0))
-        if total_miles.get(name) is not None:
-            final_report.setdefault(name, []).append(round(total_miles.get(name) / mph.get(name)))
-
-    sorted_x = sorted(final_report.items(), key=lambda e: e[1][0], reverse=True)
-    create_report(sorted_x)
-
-    print(final_report)
-    print(sorted_x)
-    return 'no'
 
 def create_report(sorted_x):
+    """create report and save it in output file
+
+        Args:
+          sorted_x (dict): dict
+
+        Returns:
+          nothing
+        """
     output = open(OUT_FILE, 'w')
     for key, value in sorted_x:
         try:
