@@ -9,7 +9,7 @@ __copyright__ = "atarla"
 __license__ = "mit"
 
 
-def test_fib():
+def test_driving_data():
     # some assert tests
     with pytest.raises(AssertionError):
         fib('')

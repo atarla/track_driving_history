@@ -49,11 +49,8 @@ def process_input(n):
                 d_name_dict = line.split()[1]
                 key, value = d_name_dict, []
                 trips.setdefault(key, []).append(line.rstrip())
-    print(drivers)
-    print(trips)
     total_miles = {}
     mph = {}
-
     miles = 0.0
 
     for k, dk in trips.items():
@@ -69,8 +66,6 @@ def process_input(n):
             mph.setdefault(k, sum(tdelta))
             print(total_miles)
             print(mph)
-
-    avg_speed = 0
 
     final_report = {}
     for name in drivers:
