@@ -9,7 +9,7 @@ __copyright__ = "atarla"
 __license__ = "mit"
 
 
-def test_driving_data():
-    # test if file exists
+def test_driving_data_no_input():
+    # test run with no input file
     with pytest.raises(FileNotFoundError):
         process_input(' ')

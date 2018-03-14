@@ -53,7 +53,6 @@ def process_input(n):
     total_miles, mph = calculate_miles(drivers, trips)
     final_report = {}
     for name in drivers:
-
         final_report.setdefault(name, []).append(total_miles.get(name, 0))
         if total_miles.get(name) is not None:
             speed = round(total_miles.get(name) / mph.get(name))
