@@ -12,7 +12,9 @@ import sys
 from setuptools import setup
 
 # Add here console scripts and other entry points in ini-style format
-entry_points = """
+entry_points = {
+    'console_scripts': ['fibonacci = driving_data.skeleton:run']}
+"""
 [console_scripts]
 # script_name = driving_data.module:function
 # For example:
