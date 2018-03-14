@@ -3,13 +3,15 @@ driving_data
 ============
 
 
-Add a short description here!
+
+Program to track people's driving history
 
 
 Description
 ===========
 
-A longer description of your project goes here...
+Input: Driver Name, Driver trips
+The program generates a report containing each driver with total miles driven and average speed.
 
 
 Note
