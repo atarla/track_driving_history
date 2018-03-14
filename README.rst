@@ -19,5 +19,6 @@ To run, use command: `driving_data <input filename>`
 Note
 ====
 
-This project has been set up using PyScaffold 3.0.1. For details and usage
-information on PyScaffold see http://pyscaffold.org/.
+Used pyscaffold for initial structure
+Stored initial data from input and intermediate results in Dictionaries(Key,Value structure).
+Code in: track_driving_history/src/driving_data/track_driving_hist.py
