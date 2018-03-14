@@ -15,8 +15,6 @@ Input: Driver Name, Driver trips
 The program generates a report containing each driver with total miles driven and average speed.
 To run, use command: `driving_data <input filename>`
 
-To run test: python setup.py test
-
 
 Note
 ====
